@@ -8,7 +8,7 @@ import Display from './Display'
 describe('<Display />', () => {
     it('displays unlocked if unlocked (default)', () => {
         const { getByText, getByTestId } = render(<Display />);
-        expect(getByText(/unlocked/i)).toBe(/unlocked/i)
+        expect(getByText(/unlocked/i))
         const close = getByTestId("lockedUnlocked");
         expect(close).toHaveClass("green-led");
     })
