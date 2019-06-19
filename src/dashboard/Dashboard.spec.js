@@ -10,7 +10,7 @@ describe('<Dashboard />', () => {
     })
 })
 
-describe('display',() => {
+describe('displays',() => {
     it('renders display', () => {
         const { getByTestId } = render(<Dashboard />)
         getByTestId(/display/i)
