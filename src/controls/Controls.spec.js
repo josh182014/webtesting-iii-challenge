@@ -1,5 +1,5 @@
 import React from 'react'
-import { getByText, render } from '@testing-library/react'
+import { getByText, render, fireEvent } from '@testing-library/react'
 import "jest-dom/extend-expect"; 
 import '@testing-library/react/cleanup-after-each';
 
@@ -32,6 +32,19 @@ describe('<Controls />', () => {
     })
 
     it("button's text changes to reflect the state the door will be in if clicked", () => {
+
+        let locked = { locked: false }
+        const closed = { closed: false }
+        const toggleLocked = () => {
+            locked.locked = true
+            console.log(locked)
+        }
         
+        const { getByText, getByTestId } = render(<Controls locked={locked.locked} toggleLocked={toggleLocked}/>)
+        const button = getByTestId('lockButton')
+        expect(button).toHaveTextContent('Lock Gate')
+        fireEvent.click(button)
+        expect(button).toHaveTextContent('Unlock Gate')
+
     })
 })
