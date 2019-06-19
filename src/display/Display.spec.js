@@ -1,33 +1,41 @@
 import React from 'react'
 import { render } from '@testing-library/react'
+import "jest-dom/extend-expect"; 
 import '@testing-library/react/cleanup-after-each';
 
 import Display from './Display'
 
 describe('<Display />', () => {
-    it('displays locked if locked', () => {
-        const { getByText } = render(<Display />);
-        expect(getByText(/Locked/i))
+    it('displays unlocked if unlocked (default)', () => {
+        const { getByText, getByTestId } = render(<Display />);
+        expect(getByText(/unlocked/i)).toBe(/unlocked/i)
+        const close = getByTestId("lockedUnlocked");
+        expect(close).toHaveClass("green-led");
     })
 
-    it('displays Unlocked if unlocked', () => {
-        const locked = { locked: false }
+    it('displays locked if locked', () => {
+        const locked = { locked: true }
         const closed = { closed: false }
 
-        const { getByText } = render(<Display closed={closed.closed} locked={locked.locked} />)
-        expect(getByText(/Unlocked/i))
+        const { getByText, getByTestId } = render(<Display closed={closed.closed} locked={locked.locked} />)
+        expect(getByText(/locked/i))
+        const close = getByTestId("lockedUnlocked");
+        expect(close).toHaveClass("red-led");
     })
 
-    it('displays open if open', () => {
-        const { getByText } = render(<Display />);
+    it('displays open if open and class name of green-led (default)', () => {
+        const { getByText, getByTestId } = render(<Display />);
         expect(getByText(/open/i))
+        const close = getByTestId("openClose");
+        expect(close).toHaveClass("green-led");
     })
 
-    it('displays closed if closed', () => {
+    it('displays closed if closed and have class name red-led', () => {
         const locked = { locked: false }
         const closed = { closed: true }
 
-        const { getByText } = render(<Display closed={closed.closed} locked={locked.locked} />)
-        expect(getByText(/closed/i))
+        const { getByText, getByTestId } = render(<Display closed={closed.closed} locked={locked.locked} />)
+        const close = getByTestId("openClose");
+        expect(close).toHaveClass("red-led");
     })
 })
