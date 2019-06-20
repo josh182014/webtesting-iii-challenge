@@ -6,6 +6,13 @@ import '@testing-library/react/cleanup-after-each';
 import Display from './Display'
 
 describe('<Display />', () => {
+
+    it('defaults to unlocked and open', () => {
+        const { getByText, getByTestId } = render(<Display />);
+        expect(getByText(/unlocked/i))
+        expect(getByText(/open/i))
+    })
+
     it('displays unlocked if unlocked (default)', () => {
         const { getByText, getByTestId } = render(<Display />);
         expect(getByText(/unlocked/i))
