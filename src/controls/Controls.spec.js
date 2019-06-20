@@ -44,7 +44,7 @@ describe('<Controls />', () => {
         expect(spy).toHaveBeenCalled()
 
     })
-    it("lock button's text reflects state and button can be clicked", () => {
+    it("lock button's text reflects state ", () => {
 
         let checkIfLocked = { locked: true }
         const checkIfClosed = { closed: true }
@@ -54,7 +54,7 @@ describe('<Controls />', () => {
         expect(button).toHaveTextContent('Unlock Gate')
 
     })
-    it("close button's text reflects state and button can be clicked", () => {
+    it("close button's text reflects state ", () => {
 
         let checkIfLocked = { locked: true }
         const checkIfClosed = { closed: true }
@@ -64,7 +64,7 @@ describe('<Controls />', () => {
         expect(button).toHaveTextContent('Open Gate')
 
     })
-    it("close button's text reflects state and button can be clicked", () => {
+    it("close button's text reflects state ", () => {
 
         let checkIfLocked = { locked: true }
         const checkIfClosed = { closed: false }
