@@ -1,6 +1,6 @@
 import React from 'react'
-import { getByText, render, fireEvent } from '@testing-library/react'
 import "jest-dom/extend-expect"; 
+import { getByText, render, fireEvent } from '@testing-library/react'
 import '@testing-library/react/cleanup-after-each';
 
 import Controls from './Controls'
@@ -31,20 +31,47 @@ describe('<Controls />', () => {
         expect(getByText(/Lock Gate/i, 'button')).toBeDisabled()
     })
 
-    it("button's text changes to reflect the state the door will be in if clicked", () => {
+    it("lock button's text reflects state and button can be clicked", () => {
 
-        let locked = { locked: false }
-        const closed = { closed: false }
-        const toggleLocked = () => {
-            locked.locked = true
-            console.log(locked)
-        }
+        let checkIfLocked = { locked: false }
+        const checkIfClosed = { closed: true }
+        const spy = jest.fn()
         
-        const { getByText, getByTestId } = render(<Controls locked={locked.locked} toggleLocked={toggleLocked}/>)
-        const button = getByTestId('lockButton')
+        const { getByText, getByTestId } = render(<Controls locked={checkIfLocked.locked} toggleLocked={spy} closed={checkIfClosed.closed} />)
+        let button = getByTestId('lockButton')
         expect(button).toHaveTextContent('Lock Gate')
-        fireEvent.click(button)
+        fireEvent.click(button);
+        expect(spy).toHaveBeenCalled()
+
+    })
+    it("lock button's text reflects state and button can be clicked", () => {
+
+        let checkIfLocked = { locked: true }
+        const checkIfClosed = { closed: true }
+        
+        const { getByText, getByTestId } = render(<Controls locked={checkIfLocked.locked} closed={checkIfClosed.closed} />)
+        let button = getByTestId('lockButton')
         expect(button).toHaveTextContent('Unlock Gate')
+
+    })
+    it("close button's text reflects state and button can be clicked", () => {
+
+        let checkIfLocked = { locked: true }
+        const checkIfClosed = { closed: true }
+        
+        const { getByText, getByTestId } = render(<Controls locked={checkIfLocked.locked} closed={checkIfClosed.closed} />)
+        let button = getByTestId('openButton')
+        expect(button).toHaveTextContent('Open Gate')
+
+    })
+    it("close button's text reflects state and button can be clicked", () => {
+
+        let checkIfLocked = { locked: true }
+        const checkIfClosed = { closed: false }
+        
+        const { getByText, getByTestId } = render(<Controls locked={checkIfLocked.locked} closed={checkIfClosed.closed} />)
+        let button = getByTestId('openButton')
+        expect(button).toHaveTextContent('Close Gate')
 
     })
 })
